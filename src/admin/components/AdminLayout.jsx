@@ -16,7 +16,6 @@ export default function AdminLayout({ children }) {
         <header className="admin-header">
           <h1 className="admin-header-title">Back-office CESIZen</h1>
           <div className="admin-header-user">
-            <span className="admin-header-avatar">A</span>
             <span className="admin-header-email">{email}</span>
           </div>
         </header>

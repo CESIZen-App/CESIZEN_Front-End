@@ -27,6 +27,8 @@ export default function LoginPage() {
       if (role !== 'ADMIN') {
         setError("Accès refusé. Ce back-office est réservé aux administrateurs.")
         return
+
+        
       }
 
       login(token)
@@ -40,46 +42,55 @@ export default function LoginPage() {
 
   return (
     <div className="login-page">
-      <div className="login-card">
-        <div className="login-logo">
-          <span>🪷</span>
-        </div>
-        <h1 className="login-title">CESIZen</h1>
-        <p className="login-subtitle">Accès administrateur</p>
 
-        <form onSubmit={handleSubmit} className="login-form">
-          {error && <div className="login-error">{error}</div>}
-
-          <div className="form-group">
-            <label className="form-label">Adresse mail</label>
-            <input
-              type="email"
-              className="form-input"
-              placeholder="admin@cesizen.fr"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              required
-              autoFocus
-            />
-          </div>
-
-          <div className="form-group">
-            <label className="form-label">Mot de passe</label>
-            <input
-              type="password"
-              className="form-input"
-              placeholder="••••••••"
-              value={form.password}
-              onChange={(e) => setForm({ ...form, password: e.target.value })}
-              required
-            />
-          </div>
-
-          <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
-            {loading ? 'Connexion...' : 'Connexion'}
-          </button>
-        </form>
+      {/* Panneau gauche — branding */}
+      <div className="login-brand">
+        <img src="/fleur.png" alt="CESIZen" className="login-brand-logo" />
+        <h2 className="login-brand-title">CESIZen</h2>
+        <p className="login-brand-sub">Espace d'administration</p>
       </div>
+
+      {/* Panneau droit — formulaire */}
+      <div className="login-panel">
+        <div className="login-form-wrap">
+          <h1 className="login-title">Connexion</h1>
+          <p className="login-subtitle">Réservé aux administrateurs</p>
+
+          <form onSubmit={handleSubmit} className="login-form">
+            {error && <div className="login-error">{error}</div>}
+
+            <div className="form-group">
+              <label className="form-label">Adresse mail</label>
+              <input
+                type="email"
+                className="form-input"
+                placeholder="admin@cesizen.fr"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                required
+                autoFocus
+              />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">Mot de passe</label>
+              <input
+                type="password"
+                className="form-input"
+                placeholder="••••••••"
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                required
+              />
+            </div>
+
+            <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
+              {loading ? 'Connexion...' : 'Se connecter'}
+            </button>
+          </form>
+        </div>
+      </div>
+
     </div>
   )
 }

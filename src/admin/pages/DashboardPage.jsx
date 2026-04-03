@@ -4,8 +4,8 @@ import api from '../services/api'
 function StatCard({ label, value, icon, color }) {
   return (
     <div className="stat-card" style={{ borderTopColor: color }}>
-      <div className="stat-card-icon" style={{ backgroundColor: color + '20', color }}>
-        {icon}
+      <div className="stat-card-icon" style={{ backgroundColor: color + '20' }}>
+        <img src={icon} alt="" style={{ width: 26, height: 26, objectFit: 'contain' }} />
       </div>
       <div>
         <div className="stat-card-value">{value ?? '—'}</div>
@@ -44,9 +44,9 @@ export default function DashboardPage() {
       </div>
 
       <div className="stat-grid">
-        <StatCard label="Utilisateurs" value={stats.users} icon="👤" color="#8B5CF6" />
-        <StatCard label="Exercices" value={stats.exercices} icon="🫁" color="#06B6D4" />
-        <StatCard label="Pages d'information" value={stats.pages} icon="📄" color="#10B981" />
+        <StatCard label="Utilisateurs" value={stats.users} icon="/utilisateur(2).png" color="#8B5CF6" />
+        <StatCard label="Exercices" value={stats.exercices} icon="/poumons.png" color="#06B6D4" />
+        <StatCard label="Pages d'information" value={stats.pages} icon="/information.png" color="#10B981" />
       </div>
 
       <div className="dashboard-welcome">

@@ -2,10 +2,10 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
 const links = [
-  { to: '/admin', label: 'Tableau de bord', icon: '⊞', end: true },
-  { to: '/admin/users', label: 'Utilisateurs', icon: '👤' },
-  { to: '/admin/information', label: 'Pages info', icon: '📄' },
-  { to: '/admin/exercices', label: 'Exercices', icon: '🫁' },
+  { to: '/admin',             label: 'Tableau de bord', icon: '/tableau-de-bord.png', end: true },
+  { to: '/admin/users',       label: 'Utilisateurs',    icon: '/utilisateur(2).png' },
+  { to: '/admin/information', label: 'Pages info',      icon: '/information.png' },
+  { to: '/admin/exercices',   label: 'Exercices',       icon: '/poumons.png' },
 ]
 
 export default function Sidebar() {
@@ -20,7 +20,7 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="sidebar-logo">
-        <span className="sidebar-logo-icon">🪷</span>
+        <img src="/fleur.png" alt="logo" className="sidebar-logo-img" />
         <span className="sidebar-logo-text">CESIZen</span>
         <span className="sidebar-logo-badge">Admin</span>
       </div>
@@ -35,7 +35,7 @@ export default function Sidebar() {
               'sidebar-link' + (isActive ? ' sidebar-link--active' : '')
             }
           >
-            <span className="sidebar-link-icon">{l.icon}</span>
+            <img src={l.icon} alt="" className="sidebar-link-icon" />
             {l.label}
           </NavLink>
         ))}
