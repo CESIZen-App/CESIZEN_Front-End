@@ -71,6 +71,7 @@ export function AuthProvider({ children }) {
  * Hook personnalisé pour consommer le contexte d'authentification.
  * À utiliser dans tous les composants enfants de <AuthProvider>.
  */
+// eslint-disable-next-line react-refresh/only-export-components -- hook colocalisé avec son provider, pattern standard
 export function useAuth() {
   return useContext(AuthContext)
 }
