@@ -1,3 +1,7 @@
+// Composant racine de l'application.
+// Définit le routeur principal et enveloppe l'arborescence dans le contexte d'authentification (AuthProvider).
+// Toutes les routes du back-office sont protégées via <ProtectedRoute> qui vérifie que l'utilisateur est ADMIN.
+
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './admin/context/AuthContext'
 import ProtectedRoute from './admin/components/ProtectedRoute'
@@ -12,6 +16,7 @@ import './admin/admin.css'
 export default function App() {
   return (
     <BrowserRouter>
+      {/* Fournit le contexte d'authentification à toute l'arborescence */}
       <AuthProvider>
         <Routes>
           {/* Redirection racine vers le back-office */}
@@ -21,6 +26,7 @@ export default function App() {
           <Route path="/admin/login" element={<LoginPage />} />
 
           {/* Back-office — ADMIN uniquement */}
+          {/* Chaque route est enveloppée dans <ProtectedRoute> + <AdminLayout> */}
           <Route
             path="/admin"
             element={
@@ -62,7 +68,7 @@ export default function App() {
             }
           />
 
-          {/* 404 → login */}
+          {/* Toute URL inconnue redirige vers le tableau de bord (ou login si non authentifié) */}
           <Route path="*" element={<Navigate to="/admin" replace />} />
         </Routes>
       </AuthProvider>
