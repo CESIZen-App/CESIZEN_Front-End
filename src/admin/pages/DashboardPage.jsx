@@ -37,19 +37,17 @@ export default function DashboardPage() {
      * allSettled garantit que toutes les promesses sont attendues même si l'une échoue.
      */
     async function load() {
-      try {
-        const [u, e, p] = await Promise.allSettled([
-          api.get('/user'),
-          api.get('/exercice'),
-          api.get('/information/all'),
-        ])
-        setStats({
-          // Si la requête a réussi, on compte les éléments ; sinon "—"
-          users:    u.status === 'fulfilled' ? u.value.data.length : '—',
-          exercices: e.status === 'fulfilled' ? e.value.data.length : '—',
-          pages:    p.status === 'fulfilled' ? p.value.data.length : '—',
-        })
-      } catch {}
+      const [u, e, p] = await Promise.allSettled([
+        api.get('/user'),
+        api.get('/exercice'),
+        api.get('/information/all'),
+      ])
+      setStats({
+        // Si la requête a réussi, on compte les éléments ; sinon "—"
+        users:    u.status === 'fulfilled' ? u.value.data.length : '—',
+        exercices: e.status === 'fulfilled' ? e.value.data.length : '—',
+        pages:    p.status === 'fulfilled' ? p.value.data.length : '—',
+      })
     }
     load()
   }, [])
