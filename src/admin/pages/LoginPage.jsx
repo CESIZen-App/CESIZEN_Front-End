@@ -1,3 +1,8 @@
+// Page de connexion du back-office administrateur.
+// Envoie les identifiants à l'API, décode le JWT retourné pour vérifier le rôle,
+// puis redirige vers le tableau de bord si l'utilisateur est bien ADMIN.
+// Un utilisateur avec un rôle USER verra un message d'accès refusé sans être connecté.
+
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
@@ -6,10 +11,18 @@ import api from '../services/api'
 export default function LoginPage() {
   const { login } = useAuth()
   const navigate = useNavigate()
+
+  // Champs du formulaire de connexion
   const [form, setForm] = useState({ email: '', password: '' })
+  // Message d'erreur affiché si les identifiants sont incorrects ou le rôle insuffisant
   const [error, setError] = useState('')
+  // Indicateur de chargement pendant l'appel API
   const [loading, setLoading] = useState(false)
 
+  /**
+   * Gère la soumission du formulaire de connexion.
+   * Vérifie que le rôle est ADMIN avant d'autoriser l'accès au back-office.
+   */
   async function handleSubmit(e) {
     e.preventDefault()
     setError('')
@@ -18,19 +31,19 @@ export default function LoginPage() {
       const { data } = await api.post('/user/login', form)
       const token = data.token
 
-      // Vérification du rôle avant d'autoriser l'accès
+      // Décodage du payload JWT pour vérifier le rôle sans appel supplémentaire
       const payload = JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')))
       const role =
         payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] ??
         payload.role
 
+      // Vérification du rôle avant d'autoriser l'accès
       if (role !== 'ADMIN') {
         setError("Accès refusé. Ce back-office est réservé aux administrateurs.")
         return
-
-        
       }
 
+      // Stockage du token et redirection vers le tableau de bord
       login(token)
       navigate('/admin')
     } catch {
@@ -57,6 +70,7 @@ export default function LoginPage() {
           <p className="login-subtitle">Réservé aux administrateurs</p>
 
           <form onSubmit={handleSubmit} className="login-form">
+            {/* Message d'erreur affiché si la connexion échoue */}
             {error && <div className="login-error">{error}</div>}
 
             <div className="form-group">
@@ -84,6 +98,7 @@ export default function LoginPage() {
               />
             </div>
 
+            {/* Bouton désactivé pendant le chargement pour éviter les double-soumissions */}
             <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
               {loading ? 'Connexion...' : 'Se connecter'}
             </button>
